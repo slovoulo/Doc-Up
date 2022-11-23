@@ -12,7 +12,7 @@ import (
 var Documents []Document
 
 //Creating a new document
-func createNewDocument(w http.ResponseWriter, r *http.Request) {
+func CreateNewDocument(w http.ResponseWriter, r *http.Request) {
     // get the body of the  POST request
     // unmarshal this into a new Document struct
     // append this to the Documents array.     
@@ -29,7 +29,7 @@ func createNewDocument(w http.ResponseWriter, r *http.Request) {
 }
 
 //Fetch a single document
-func returnSingleDocument(w http.ResponseWriter, r *http.Request) {
+func ReturnSingleDocument(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["id"]
 
@@ -44,7 +44,7 @@ func returnSingleDocument(w http.ResponseWriter, r *http.Request) {
 }
 
 //Fetch all documents
-func returnAllDocuments(w http.ResponseWriter, r *http.Request) {
+func ReturnAllDocuments(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: returnAllDocuments")
 
 	//The call to json.NewEncoder(w).Encode(article) does the job of encoding our documents array into a JSON string and then writing as part of our response.
@@ -52,7 +52,7 @@ func returnAllDocuments(w http.ResponseWriter, r *http.Request) {
 }
 
 //Update document
-func updateDocument(w http.ResponseWriter, r *http.Request) {
+func UpdateDocument(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -75,7 +75,7 @@ func updateDocument(w http.ResponseWriter, r *http.Request) {
 	}
 
 //Deleting a document
-func deleteDocument(w http.ResponseWriter, r *http.Request) {
+func DeleteDocument(w http.ResponseWriter, r *http.Request) {
     // once again, we will need to parse the path parameters
     vars := mux.Vars(r)
     // we will need to extract the `id` of the doc we
@@ -98,7 +98,7 @@ func deleteDocument(w http.ResponseWriter, r *http.Request) {
 // Creating a user model/struct containing all the attributes of  a user
 type Document struct {
 	
-	Id           string `json: "id"`
+	Id           string `json:"id"`
 	Name         string	`json:"name"`
 	DateCreated         string	`json:"dateCreated"`
 	

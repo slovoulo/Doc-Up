@@ -12,7 +12,7 @@ import (
 var Users []User
 
 //Creating a new user
-func createNewUser(w http.ResponseWriter, r *http.Request) {
+func CreateNewUser(w http.ResponseWriter, r *http.Request) {
     // get the body of the  POST request
     // unmarshal this into a new User struct
     // append this to the Users array.     
@@ -29,7 +29,7 @@ func createNewUser(w http.ResponseWriter, r *http.Request) {
 }
 
 //Fetch a single user
-func returnSingleUser(w http.ResponseWriter, r *http.Request) {
+func ReturnSingleUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	key := vars["id"]
 
@@ -44,7 +44,7 @@ func returnSingleUser(w http.ResponseWriter, r *http.Request) {
 }
 
 //Deleting a user
-func deleteUser(w http.ResponseWriter, r *http.Request) {
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
     // once again, we will need to parse the path parameters
     vars := mux.Vars(r)
     // we will need to extract the `id` of the user we
@@ -67,9 +67,9 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 // Creating a user model/struct containing all the attributes of  a user
 type User struct {
 	
-	Id           string `json: "id"`
+	Id           string `json:"id"`
 	Name         string	`json:"name"`
 	Email         string	`json:"email"`
-	Password  string	`json:"string"`
+	Password  string	`json:"password"`
 	
 }
