@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/slovojoe/Doc-Up/models"
+	"gorm.io/gorm"
+	"gorm.io/driver/postgres"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -38,13 +41,40 @@ func handleRequests() {
 }
 
 func main (){
-	//Adding dummy user and document data
-	models.Documents = []models.Document{
-		{Id: "1", Name: "Driver's license", DateCreated: "25th August"},
-	}
-	models.Users=[]models.User{
-		{Id: "1",Name: "Kratos", Email: "kratos@zeus.die",Password: "Boooooy"},
-	}
+
+	//Loading environment variables
+	//dialect:= os.Getenv("DIALECT")
+	host:= os.Getenv("HOST")
+	dbPort:= os.Getenv("DBPORT")
+	user:= os.Getenv("USER")
+	dbName:= os.Getenv("NAME")
+	password:= os.Getenv("PASSWORD")
+
+	//Database connection string
+	dbURI := fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s", host, dbPort, user, dbName, password)
+
+	//Opening connection to DB
+	db, err := gorm.Open(postgres.Open(dbURI), &gorm.Config{})
+
+	if err !=nil{
+		log.Fatal(err)
+
+	}else{fmt.Println("Successfully connected to a database")}
+
+	//Close connrction to db when main function finishes
+	//*defer db.Close()
+
+	//Make migrations to the DB if they have not been made
+	db.AutoMigrate(&models.Document{})
+	db.AutoMigrate(&models.User{})
+
+	// //Adding dummy user and document data
+	// models.Documents = []models.Document{
+	// 	{Id: "1", Name: "Driver's license", DateCreated: "25th August"},
+	// }
+	// models.Users=[]models.User{
+	// 	{Id: "1",Name: "Kratos", Email: "kratos@zeus.die",Password: "Boooooy"},
+	// }
 handleRequests()
 }
 

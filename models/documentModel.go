@@ -101,6 +101,7 @@ type Document struct {
 	Id           string `json:"id"`
 	Name         string	`json:"name"`
 	DateCreated         string	`json:"dateCreated"`
+	UserId string //User refers to the owner of the document from the USers model
 	
 	
 }
