@@ -1,0 +1,6 @@
+$DIALECT="postgres"
+$DBHOST="localhost"
+$DBPORT="5432"
+$USER="postgres"
+$NAME="docup"
+$PASSWORD="Jackseven1"
