@@ -15,6 +15,7 @@ var Db *gorm.DB
 
 //Creating a new user
 
+
 func (h handler) CreateNewUser(w http.ResponseWriter, r *http.Request) {
 	// get the body of the  POST request
 	// unmarshal this into a new User struct
@@ -89,7 +90,7 @@ type User struct {
 	Name      string
 	Email     string
 	Password  string
-	Documents []Document
+	Documents []Document 
 }
 
 type Document struct {

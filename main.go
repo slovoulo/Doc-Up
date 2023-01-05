@@ -59,6 +59,7 @@ func GetAll(db *gorm.DB) []*models.User {
 }
 
 func main() {
+	
 	var err error
 	myRouter := mux.NewRouter().StrictSlash(true)
 
@@ -76,12 +77,14 @@ func main() {
 	//Opening connection to DB
 	models.Db, err = gorm.Open(postgres.Open(dbURI), &gorm.Config{})
 	h := models.New(models.Db)
+
 	myRouter.HandleFunc("/createuser", h.CreateNewUser).Methods("POST")
 	myRouter.HandleFunc("/getall", h.GetUsersDocs).Methods("GET")
 	myRouter.HandleFunc("/createdocument", h.CreateNewDocument).Methods("POST")
 	myRouter.HandleFunc("/returnsingleuser/{id}", h.ReturnSingleUser).Methods("GET")
 	myRouter.HandleFunc("/deleteuser/{id}", h.DeleteUser).Methods("DELETE")
 	myRouter.HandleFunc("/updatedocument/{id}", h.UpdateDocument).Methods("PUT")
+	myRouter.HandleFunc("/deletedocument/{id}", h.DeleteDocument).Methods("DELETE")
 
 	if err != nil {
 		log.Fatal(err)

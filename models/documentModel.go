@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	
 )
 
 var Documents []Document
@@ -59,39 +60,37 @@ func (h handler)UpdateDocument(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 
+
 	
 	
-	if result := Db.First(&updatedDoc, id); result.Error != nil {
+	if result := Db.First(&document, id); result.Error != nil {
 		fmt.Println(result.Error)
 	}
 
 	document.Name=updatedDoc.Name
 
+	
 	Db.Save(&document)
 	json.NewEncoder(w).Encode(&updatedDoc)
 }
+
+// Deleting a user by ID
+func (h handler)DeleteDocument(w http.ResponseWriter, r *http.Request) {
+	// once again, we will need to parse the path parameters
+	vars := mux.Vars(r)
+	// we will need to extract the `id` of the document we
+	// wish to delete
+	id := vars["id"]
+	var deletedDocument Document
+
+	if result := Db.First(&deletedDocument, id); result.Error != nil {
+		fmt.Println(result.Error)
+	}
+
+	Db.Delete(&deletedDocument)
+	json.NewEncoder(w).Encode(deletedDocument)
+
+
+}
 	
-	//}
 
-//Deleting a document
-// func DeleteDocument(w http.ResponseWriter, r *http.Request) {
-//     // once again, we will need to parse the path parameters
-//     vars := mux.Vars(r)
-//     // we will need to extract the `id` of the doc we
-//     // wish to delete
-//     id := vars["id"]
-
-//     // we then need to loop through all Documents
-//     for index, document := range Documents {
-//         // if our id path parameter matches one of our
-//         // articles
-//         if document.Id == id {
-//             // updates  Users array to remove the 
-//             // user
-//             Documents = append(Documents[:index], Documents[index+1:]...)
-//         }
-//     }
-
-// }
-
-// Creating a user model/struct containing all the attributes of  a user
